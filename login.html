@@ -8,52 +8,59 @@ layout: page
   <button id="registerBtn">Registrati</button>
   <button id="loginBtn">Accedi</button>
 
-<script>
 
-  import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
-const registerBtn = document.getElementById('registerBtn');
-const loginBtn = document.getElementById('loginBtn');
+  // Configurazione Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCmEiPbdLOXu7kb_QdxMYLln1xTRm3Fj0Q",
+    authDomain: "arenagiovanifriulioccidentale.firebaseapp.com",
+    projectId: "arenagiovanifriulioccidentale",
+    storageBucket: "arenagiovanifriulioccidentale.appspot.com",
+    messagingSenderId: "490862063657",
+    appId: "1:490862063657:web:58c0f7df6b46e6f894ac38",
+    measurementId: "G-CM1Z918EK3"
+  };
 
-registerBtn.addEventListener('click', async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  // Inizializza Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
 
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    alert("✅ Registrazione effettuata: " + userCredential.user.email);
-  } catch (error) {
-    alert("❌ Errore registrazione: " + error.message);
-  }
-});
+  // Eventi registrazione e login
+  document.getElementById('registerBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-loginBtn.addEventListener('click', async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      alert("✅ Registrazione effettuata: " + userCredential.user.email);
+    } catch (error) {
+      alert("❌ Errore registrazione: " + error.message);
+    }
+  });
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    alert("✅ Login effettuato: " + userCredential.user.email);
-  } catch (error) {
-    alert("❌ Errore login: " + error.message);
-  }
-});
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert("✅ Login effettuato: " + userCredential.user.email);
+    } catch (error) {
+      alert("❌ Errore login: " + error.message);
+    }
+  });
 
-
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("👋 Utente loggato:", user.email);
-    alert("Sei loggato come " + user.email);
-    // Qui puoi fare:
-    // window.location.href = '/dashboard.html';
-  } else {
-    console.log("❌ Nessun utente loggato");
-  }
-});
-
-
-  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("👋 Utente loggato:", user.email);
+      alert("Sei loggato come " + user.email);
+    } else {
+      console.log("❌ Nessun utente loggato");
+    }
+  });
 </script>

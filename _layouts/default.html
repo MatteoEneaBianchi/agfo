@@ -12,6 +12,31 @@
   {{ content }}
   {%- include footer/footer.html -%}
   {%- include cookiebar.html -%}
-  {%- include scripts.html -%}
+<script type="module">
+  // Import dei principali moduli Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+
+  // 👇 AGGIUNGI QUESTA RIGA SOTTO A QUELLE SOPRA
+  import { getAuth } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js"; 
+
+  // Configurazione Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCmEiPbdLOXu7kb_QdxMYLln1xTRm3Fj0Q",
+    authDomain: "arenagiovanifriulioccidentale.firebaseapp.com",
+    projectId: "arenagiovanifriulioccidentale",
+    storageBucket: "arenagiovanifriulioccidentale.firebasestorage.app",
+    messagingSenderId: "490862063657",
+    appId: "1:490862063657:web:58c0f7df6b46e6f894ac38",
+    measurementId: "G-CM1Z918EK3"
+  };
+
+  // Inizializzazione Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+  // 👇 Qui useremo auth nel passaggio successivo
+  const auth = getAuth(app);
+</script>
 </body>
 </html>
